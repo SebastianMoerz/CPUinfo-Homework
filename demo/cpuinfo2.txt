@@ -1,0 +1,51 @@
+0
+GenuineIntel
+6
+69
+Intel(R) Core(TM) i7-4500U CPU @ 1.80GHz
+1
+0x17
+774.000
+4096 KB
+0
+4
+0
+2
+0
+0
+yes
+yes
+13
+yes
+fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid
+3591.40
+64
+64
+39 bits physical, 48 bits virtual
+(power management parameter missing)
+Break here
+1
+GenuineIntel (1)
+6 (1)
+69
+Intel(R) Core(TM) i7-4500U CPU @ 1.80GHz (1)
+1 (1)
+0x17 (1)
+774.000 (1)
+4096 KB (1)
+0 (1)
+4 (1)
+0 (1)
+2 (1)
+0 (1)
+0 (1)
+yes (1)
+yes (1)
+13 (1)
+yes (1)
+(1) fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid
+3591.40 (1)
+64 (1)
+64 (1)
+39 bits physical, 48 bits virtual (1)
+(power management parameter missing) (1)
