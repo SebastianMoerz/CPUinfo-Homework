@@ -12,19 +12,19 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    // create instance of CPUinfoReader-Class
     CPUinfoReader cpureader;
 
-    // link CPUinfoReader-Instance to QML
     engine.rootContext()->setContextProperty("cpureader", &cpureader);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
+
     QList<QObject*> rootObjList = engine.rootObjects();;
-    // QObject* viewerobject = rootObjList.first();
+    QObject* viewerobject = rootObjList.first();
 
 
     return app.exec();
 }
+
 
 
 

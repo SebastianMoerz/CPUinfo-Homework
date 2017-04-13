@@ -6,8 +6,14 @@ Button {
 
     property alias buttontext : text1.text
 
+    width: 120
+    height: 32
+
     ColorBox {
       id : box
+
+      text : ""
+
       gradient: Gradient {
           GradientStop {
               position: 0

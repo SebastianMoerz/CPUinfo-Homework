@@ -7,7 +7,7 @@ Rectangle {
     height: 40
 
     property int expandedHeight : 200
-    property int expandedWidth  : 400
+    property int expandedWidth  : 300
     property int closeButtonWidth  : 25
     property int maxTextLength  : 30
 
@@ -65,6 +65,7 @@ Rectangle {
         border.color: "#b0c4de"
 
         MouseArea {
+            id: mouseArea1
             anchors.fill: parent
             onClicked: expandableEntry.state = ""
         }
@@ -74,10 +75,18 @@ Rectangle {
     states: [
         State {
         name: "expanded"
-        PropertyChanges { target: closeButton; text: "X"; opacity: 1 }
+        PropertyChanges { target: closeButton; x: 262; height: 32; radius: 2; text: "X"; anchors.rightMargin: 8; anchors.topMargin: 0; opacity: 1 }
         PropertyChanges { target: expandableEntry; height: expandedHeight; width : expandedWidth; anchors.verticalCenter: liste.verticalCenter}
-        PropertyChanges { target: labelbox; anchors.top: parent.top ; width : expandedWidth - 35 ; height: 32; anchors.leftMargin: 4;anchors.topMargin: 0}
+        PropertyChanges { target: labelbox; anchors.top: parent.top ; width : expandedWidth - 35 ; height: 32; anchors.leftMargin: 0;anchors.topMargin: 0}
         PropertyChanges { target: contentbox; anchors.top : labelbox.bottom; anchors.left : parent.left; width : expandedWidth; height : 154; text : fulltext;}
+
+        PropertyChanges {
+            target: mouseArea1
+            anchors.rightMargin: 0
+            anchors.topMargin: 0
+            anchors.leftMargin: 0
+            anchors.bottomMargin: 0
+        }
         }
     ]
 

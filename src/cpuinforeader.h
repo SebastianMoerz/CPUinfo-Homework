@@ -12,7 +12,7 @@
 
 
 // Column-Separator in /proc/cpuinfo
-const QString SEPARATOR     = "\t";
+const QString SEPARATOR     = ":";
 
 
 // this structure contains information for one CPU
@@ -35,17 +35,24 @@ class CPUinfoReader : public QObject
     CPUinfoReader();                    // constructor
     ~CPUinfoReader();                   // destructor
 
+    Q_INVOKABLE void strLog (QString log) {
+        qDebug() << log;
+    }
+
+    Q_INVOKABLE void intLog (int log) {
+        qDebug() << QString::number(log);
+    }
 
     // returns the number of lines containing information for the CPU with the index CPUnumber
     // NOT WORKING PROPERLY!
     Q_INVOKABLE int getNumberOfEntries (int CPUnumber)
     {
-        //qDebug() << "getNumberOfEntries called";
+        qDebug() << "getNumberOfEntries called";
         if (CPUlist.empty()) {
              return 0;
         }
         else {
-            //qDebug() << "Entries in CPU number " + QString::number(CPUnumber) + " of " + QString::number(CPUlist.size()-1) + ": " + QString::number(CPUlist.at(CPUnumber)->labellist.size());
+            qDebug() << "Entries in CPU number " + QString::number(CPUnumber) + " of " + QString::number(CPUlist.size()-1) + ": " + QString::number(CPUlist.at(CPUnumber)->labellist.size());
 
             // ERROR!
             // this function returns always 10!
@@ -69,8 +76,7 @@ class CPUinfoReader : public QObject
         }
     }
 
-    // returns the string containing the Xth content (=information) of CPU number "processorNumber" with X = propertyNumber
-    // NOT WORKING PROPERLY!
+    // returns the string containing the Xth content (=information) of CPU number "processorNumber" with X = propertyNumber    
     Q_INVOKABLE QString getLabelText(int propertyNumber, int processorNumber)
     {
         // handle errors
@@ -99,13 +105,15 @@ class CPUinfoReader : public QObject
         {
             // ERROR!
             // Programm crashs if CPUlist.at(processorNumber)->labellist.at(propertyNumber) is returned!
-            return "Content Test";
-            //return CPUlist.at(processorNumber)->labellist.at(propertyNumber);
+
+            //return "Content Test";
+            int len = CPUlist.at(processorNumber)->labellist.at(propertyNumber)->length();
+            return CPUlist.at(processorNumber)->labellist.at(propertyNumber)->left(len);
+
         }
     }
 
-    // returns the string containing the Xth label of CPU number "processorNumber" with X = propertyNumber
-    // NOT WORKING PROPERLY!
+    // returns the string containing the Xth label of CPU number "processorNumber" with X = propertyNumber   
     Q_INVOKABLE QString getContentText(int propertyNumber, int processorNumber)
     {
         // handle errors
@@ -134,8 +142,10 @@ class CPUinfoReader : public QObject
         {
             // ERROR!
             // Programm crashs if CPUlist.at(processorNumber)->contentlist.at(propertyNumber) is returned!
-            return "Label Test";
-            //return CPUlist.at(processorNumber)->contentlist.at(propertyNumber);
+
+            //return "Label Test";
+            int len = CPUlist.at(processorNumber)->contentlist.at(propertyNumber)->length();
+            return CPUlist.at(processorNumber)->contentlist.at(propertyNumber)->right(len);
         }
     }
 
@@ -179,8 +189,9 @@ class CPUinfoReader : public QObject
                 // create new CPU if the string "processor" is found
                 if (CPUlist.empty() || line.contains("processor"))
                 {
+                    // qDebug() << "create new cpu";
                     CPUinfo* newCPU = new CPUinfo;
-                    CPUlist.append(newCPU);
+                    CPUlist.append(newCPU);                    
                 }
 
                 // the format of each line in /proc/cpuinfo is "label" + "SEPARATOR" + ": " + "content"
@@ -199,18 +210,20 @@ class CPUinfoReader : public QObject
                         labeltext = "invalid";
                         contenttext = "invalid";
                    }
+                }
                 // handle empty lines
                 else {
                         labeltext = "";
                         contenttext = "";
-                    }
                 }
+
 
                 QString* newlabel = new QString;
                 QString* newcontent = new QString;
 
-                newlabel = &labeltext;
-                newcontent = &contenttext;
+                *newlabel = labeltext;
+                *newcontent = contenttext;
+
 
                 // if the line is not empty, append the current line to the data structure
                 // note that corrupted lines will still be added (marked as "invalid"
@@ -225,8 +238,8 @@ class CPUinfoReader : public QObject
             // delete first element of CPUlist if the file contains a header of any type (i.e. the first line does not contain the string "processor"
             if (!CPUlist.empty())
             {
-                if (!CPUlist.first()->labellist.empty())
-                {
+                if (CPUlist.first()->labellist.empty())
+                {                    
                     CPUlist.removeFirst();
                 }
                 else if (!CPUlist.first()->labellist.first()->contains("processor"))
@@ -240,12 +253,12 @@ class CPUinfoReader : public QObject
             if (CPUlist.empty())
             {
                 qDebug() << "No valid CPU information found in file";
-                return "No valid CPU information found in file " + Filename;
+                return "No valid CPU information found in file!";
             }
             else
             {
                 qDebug() << "CPU Information read successfully";
-                return  "CPU Information read successfully: " + QString::number(CPUlist.size()) + " CPUs were found!";
+                return  "CPU Information read successfully: " + QString::number(CPUlist.size()) + " CPUs found!";
             }
     }
 

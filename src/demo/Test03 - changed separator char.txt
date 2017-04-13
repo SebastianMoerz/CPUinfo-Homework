@@ -1,0 +1,18 @@
+processor \t 0
+BogoMIPS \t 62.50
+Features \t fp asimd evtstrm aes pmull sha1 sha2 crc32
+CPU implementer \t 0x41
+CPU architecture\t 8
+CPU variant \t 0x1
+CPU part \t 0xd07
+CPU revision \t 3
+
+processor \t 1
+BogoMIPS \t 62.50
+Features \t fp asimd evtstrm aes pmull sha1 sha2 crc32
+CPU implementer \t 0x4e
+CPU architecture\t 8
+CPU variant \t 0x0
+CPU part \t 0x003
+CPU revision \t 0
+MTS version \t 37620520

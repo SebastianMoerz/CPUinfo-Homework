@@ -19,13 +19,17 @@ ApplicationWindow {
 
     // for development only
     // local windows path
-    property string filepath: "C:/Users/Sebastian/Desktop/CPUproj/test/demo/cpuinfo3.txt"
+    property string filepath: "./demo/cpuinfo3.txt"
+    // property string filepath: "./demo/Test01 - empty file.txt"                  // BUTTON + returns -1
+    // property string filepath: "./demo/Test02 - additional separtor.txt"
+    // property string filepath: "./demo/Test03 - changed separator char.txt"      // ONLY DISPLAYS ONE CPU
+    // property string filepath: "./demo/Test04 - header.txt"
 
 
     StatusText {
         id: displayCurrentCPU
-        x: 233
-        y: 71
+        x: 206
+        y: 70
         width: 134
         height: 25
         text: qsTr("no CPUs loaded")
@@ -34,8 +38,8 @@ ApplicationWindow {
 
     StatusText{
         id: statusinfo
-        x: 233
-        y: 22
+        x: 206
+        y: 25
         width: 298
         height: 25
         text: qsTr("file not read yet. click button!")
@@ -47,9 +51,9 @@ ApplicationWindow {
     Rectangle {
 
         id : listbackground
-        x: 69
-        y: 108
-        width: 462
+        x: 105
+        y: 110
+        width: 373
         height: 514
         color: "#ffffff"
         radius: 8
@@ -58,7 +62,7 @@ ApplicationWindow {
 
             Column {
 
-                width: 462
+                width: 373
                 height: 514
 
                 spacing: 5
@@ -67,12 +71,14 @@ ApplicationWindow {
                 ListView {
 
                     id: liste
+                    anchors.rightMargin: 45
+                    anchors.leftMargin: 45
+                    anchors.bottomMargin: 10
+                    anchors.topMargin: 10
+                    anchors.fill: parent
                     interactive: true
                     boundsBehavior: Flickable.DragOverBounds
 
-                    width: 462
-                    height: 514
-                    anchors.margins: 20
 
                     // initialize the list without elements, since CPU info is not available at start (Button "loadCPUinfo" has to be clicked first)
                     model: 0
@@ -87,8 +93,9 @@ ApplicationWindow {
     // information that does not fit into the box will not be displayed, but indicated with "..."
     // use ExpandableEntry for a more complex layout, where individual items can be clicked to display more information
     Component {
-        id: cpuinfoDelegate
-        ListEntryBox {
+        id: cpuinfoDelegate        
+        //ListEntryBox {
+        ExpandableEntry {
         }
     }
 
@@ -97,9 +104,7 @@ ApplicationWindow {
     StyledButton {
         id: loadCPUinfo
         x: 75
-        y: 21
-        width: 103
-        height: 26
+        y: 21       
         buttontext: qsTr("Read CPU info")
         onClicked: {
 
@@ -112,8 +117,10 @@ ApplicationWindow {
             // write number of CPUs found to property
             numberOfCPUs = cpureader.getNumberOfCPUs()
 
-            // display the number of CPUs found
-            displayCurrentCPU.text = cpureader.getNumberOfCPUs()
+            // prompt user
+            displayCurrentCPU.text = "    <- select CPU ->"
+
+
         }
     }
 
@@ -131,35 +138,37 @@ ApplicationWindow {
             // set default if /proc/cpuinfo is not read yet
             currentCPU = isCPUinfoLoaded? currentCPU : -1
 
-            // display the number of the selected CPU
-            displayCurrentCPU.text = isCPUinfoLoaded? "CPU #" + currentCPU : "no CPUs loaded"
-
             // reload the model to write updated CPU information to ListView
             liste.model = 0
-            liste.model = cpureader.getNumberOfEntries(currentCPU)
+            liste.model = cpureader.getNumberOfEntries(currentCPU-1)
+
+            // display the number of the selected CPU
+            displayCurrentCPU.text = isCPUinfoLoaded? "CPU #" + currentCPU : "no CPUs loaded"
 
         }
     }
 
     StyledButton {
         id: incrementCurrentCPU
-        x: 411
+        x: 384
         y: 66
         buttontext: qsTr("+")
         onClicked: {
 
             // check if last CPU
-            currentCPU = (currentCPU + 1)>cpureader.getNumberOfCPUs() ? cpureader.getNumberOfCPUs() : (currentCPU + 1)
+            currentCPU = (currentCPU + 1)>=cpureader.getNumberOfCPUs() ? cpureader.getNumberOfCPUs() : (currentCPU + 1)
 
             // set default if /proc/cpuinfo is not read yet
             currentCPU = isCPUinfoLoaded? currentCPU : -1
 
+            // reload the model to write updated CPU information to ListView
+            liste.model = 0
+            liste.model = cpureader.getNumberOfEntries(currentCPU-1)
+
             // display the number of the selected CPU
             displayCurrentCPU.text = isCPUinfoLoaded? "CPU #" + currentCPU : "no CPUs loaded"
 
-            // reload the model to write updated CPU information to ListView
-            liste.model = 0
-            liste.model = cpureader.getNumberOfEntries(currentCPU)
+
         }
     }
 
