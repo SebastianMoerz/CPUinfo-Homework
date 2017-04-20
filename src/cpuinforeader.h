@@ -76,7 +76,7 @@ class CPUinfoReader : public QObject
         }
     }
 
-    // returns the string containing the Xth content (=information) of CPU number "processorNumber" with X = propertyNumber    
+    // returns the string containing the Xth content (=information) of CPU number "processorNumber" with X = propertyNumber
     Q_INVOKABLE QString getLabelText(int propertyNumber, int processorNumber)
     {
         // handle errors
@@ -113,7 +113,7 @@ class CPUinfoReader : public QObject
         }
     }
 
-    // returns the string containing the Xth label of CPU number "processorNumber" with X = propertyNumber   
+    // returns the string containing the Xth label of CPU number "processorNumber" with X = propertyNumber
     Q_INVOKABLE QString getContentText(int propertyNumber, int processorNumber)
     {
         // handle errors
@@ -180,18 +180,29 @@ class CPUinfoReader : public QObject
             QString labeltext;
             QString contenttext;
 
-            // process each line until end-of-file is found
-            while (!in.atEnd()) {
+            qDebug() << "a";
 
+            //QString line = in.readLine();
+            //qDebug() <<line;
+
+            // .atEnd() returns false if no line is read: use this trick to enter while-loop
+            bool firstLineRead = false;
+
+            // process each line until end-of-file is found
+            while (!in.atEnd() || !firstLineRead) {
+
+                firstLineRead = true;
+
+                qDebug() << "b";
                 QString line = in.readLine();
-                //qDebug() <<line;
+                qDebug() <<line;
 
                 // create new CPU if the string "processor" is found
                 if (CPUlist.empty() || line.contains("processor"))
                 {
                     // qDebug() << "create new cpu";
                     CPUinfo* newCPU = new CPUinfo;
-                    CPUlist.append(newCPU);                    
+                    CPUlist.append(newCPU);
                 }
 
                 // the format of each line in /proc/cpuinfo is "label" + "SEPARATOR" + ": " + "content"
@@ -204,9 +215,9 @@ class CPUinfoReader : public QObject
                         labeltext = list.at(0);
                         contenttext = list.at(1);
                     }
+
                     // handle corrupt lines
                     else {
-
                         labeltext = "invalid";
                         contenttext = "invalid";
                    }
@@ -239,7 +250,7 @@ class CPUinfoReader : public QObject
             if (!CPUlist.empty())
             {
                 if (CPUlist.first()->labellist.empty())
-                {                    
+                {
                     CPUlist.removeFirst();
                 }
                 else if (!CPUlist.first()->labellist.first()->contains("processor"))
@@ -258,7 +269,7 @@ class CPUinfoReader : public QObject
             else
             {
                 qDebug() << "CPU Information read successfully";
-                return  "CPU Information read successfully: " + QString::number(CPUlist.size()) + " CPUs found!";
+                return  "CPUinfo: " + QString::number(CPUlist.size()) + " CPUs found!";
             }
     }
 
@@ -277,7 +288,6 @@ class CPUinfoReader : public QObject
 
 
 #endif // CPUINFOREADER_H
-
 
 
 

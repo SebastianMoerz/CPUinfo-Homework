@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
         <file>ColorBox.qml</file>
-        <file>ListEntryBox.qml</file>
         <file>ExpandableEntry.qml</file>
+        <file>ListEntryBox.qml</file>
         <file>StatusText.qml</file>
         <file>StyledButton.qml</file>
+        <file>texture-954897_960_720.jpg</file>
     </qresource>
 </RCC>

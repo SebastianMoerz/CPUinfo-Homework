@@ -8,7 +8,7 @@ Rectangle {
     width: 200
 
 
-    color : "#b0c4de"
+    color : "#c0b16d"
 
     Text {
         id: statusinfo

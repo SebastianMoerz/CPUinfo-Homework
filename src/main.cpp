@@ -1,5 +1,7 @@
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQmlApplicationEngine>
+//#include <QApplication>
+//#include <QQmlApplicationEngine>
 #include <QQuickItem>
 #include "cpuinforeader.h"
 #include <QQmlContext>
@@ -8,7 +10,7 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
 

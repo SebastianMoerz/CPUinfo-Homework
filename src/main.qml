@@ -1,16 +1,20 @@
-import QtQuick 2.5
-import QtQuick.Controls 1.4
+import QtQuick 2.3
+import QtQuick.Controls 1.2
+
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
+
 
 ApplicationWindow {
     id : main_window
     visible: true
     width: 600
     height: 640
-    color: "#33373f"
+    //color: "#33373f"
     title: qsTr("Display CPU info")
 
+
+    //https://www.freecreatives.com/backgrounds/black-metal-textures.html
 
     property int currentCPU: 0
     property bool isCPUinfoLoaded: false
@@ -19,12 +23,22 @@ ApplicationWindow {
 
     // for development only
     // local windows path
-    property string filepath: "./demo/cpuinfo3.txt"
+    property  string filepath: "/proc/cpuinfo"
+    // property string filepath: "C:/Users/MOERZSE/Desktop/test/test/demo/cpuinfo3.txt"
     // property string filepath: "./demo/Test01 - empty file.txt"                  // BUTTON + returns -1
     // property string filepath: "./demo/Test02 - additional separtor.txt"
     // property string filepath: "./demo/Test03 - changed separator char.txt"      // ONLY DISPLAYS ONE CPU
     // property string filepath: "./demo/Test04 - header.txt"
 
+
+    Image {
+        id:background
+        height: 800
+        clip: true
+        fillMode: Image.PreserveAspectCrop
+        source: "texture-954897_960_720.jpg"
+        // TAKEN FROM https://pixabay.com/en/texture-background-design-layer-954897/, Creative Commons
+    }
 
     StatusText {
         id: displayCurrentCPU
@@ -70,14 +84,16 @@ ApplicationWindow {
 
                 ListView {
 
-                    id: liste
-                    anchors.rightMargin: 45
-                    anchors.leftMargin: 45
+                    id : liste
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
                     anchors.bottomMargin: 10
                     anchors.topMargin: 10
                     anchors.fill: parent
+                    spacing: 6
                     interactive: true
                     boundsBehavior: Flickable.DragOverBounds
+                    clip : true
 
 
                     // initialize the list without elements, since CPU info is not available at start (Button "loadCPUinfo" has to be clicked first)
@@ -93,7 +109,7 @@ ApplicationWindow {
     // information that does not fit into the box will not be displayed, but indicated with "..."
     // use ExpandableEntry for a more complex layout, where individual items can be clicked to display more information
     Component {
-        id: cpuinfoDelegate        
+        id: cpuinfoDelegate
         //ListEntryBox {
         ExpandableEntry {
         }
@@ -104,7 +120,7 @@ ApplicationWindow {
     StyledButton {
         id: loadCPUinfo
         x: 75
-        y: 21       
+        y: 21
         buttontext: qsTr("Read CPU info")
         onClicked: {
 

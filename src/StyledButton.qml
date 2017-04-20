@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick.Controls 1.2
 
 
 Button {
@@ -9,33 +9,37 @@ Button {
     width: 120
     height: 32
 
+
+
     ColorBox {
-      id : box
+        id : box
 
       text : ""
-
       gradient: Gradient {
           GradientStop {
               position: 0
-              color: "#636bd3"
+              color: "#ffffff"
           }
 
           GradientStop {
-              position: 0.85
-              color: "#0a0c27"
+              position: 0.656
+              color: "#000000"
           }
+
       }
+      border.color: "#02122b"
+
+
 
       Text {
           id: text1
           width: 120
           height: 32
 
-          text: qsTr("Text")
           verticalAlignment: Text.AlignVCenter
           font.bold: true
           horizontalAlignment: Text.AlignHCenter
-          color: "#b0c4de"
+          color: "#c7cfd8"
           font.pixelSize: 12
       }
 
